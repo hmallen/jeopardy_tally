@@ -24,11 +24,13 @@ def quit_game(correct, incorrect, dj):
     tally_file = datetime.datetime.now().strftime('%m%d%Y') + '.txt'
     
     percentage_correct = correct / (correct + incorrect)
+
+    missed_questions = total_questions - (correct + incorrect)
     
-    tally = str(correct) + ', ' + str(incorrect) + ', ' + str(dj) + ', ' + str(percentage_correct)
+    tally = str(correct) + ', ' + str(incorrect) + ', ' + str(dj) + ', ' + str(percentage_correct) + ', ' + str(missed_questions)
 
     with open(tally_file, 'w') as file:
-        file.write('Correct, Incorrect, Double Jeopardy Correct, Percentage Correct')
+        file.write('Correct, Incorrect, Double Jeopardy Correct, Percentage Correct, Missed Questions')
         file.write(tally + '\n')
 
 
@@ -55,11 +57,13 @@ if __name__ == '__main__':
                 incorrect_count += 1
             elif response == 'd':
                 print('Double jeopardy!')
-                dj_response = input()
+                dj_response = input('Answer: ')
                 if dj_response == 'y':
                     correct_count += 1
                     dj_count += 1
                     dj_added = True
+                elif dj_response == 'n':
+                    incorrect_count += 1
             elif response == 'r':
                 if response_last['response'] == 'y':
                     correct_count -= 1
